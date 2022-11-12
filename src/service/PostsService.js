@@ -7,8 +7,8 @@ class PostsService {
     return response.data;
   }
 
-  async get(id) {
-    const data = await axiosInstance.get(`/posts/${id}`);
+  async get(id) {              
+    const data = await axiosInstance.get(`/posts/${id}?filter={"include":["comments"]}`);
         return data.data;
   }
 
@@ -25,6 +25,15 @@ class PostsService {
   async delete(id){
     const res = await axiosInstance.delete(`/posts/${id}`);
     return res.status;
+  }
+  
+  async addComment(id, comment){
+    const res = await axiosInstance.post(`/posts/${id}/comments`, comment);
+    return res;
+  }
+  async getCount(id){
+    const res = await axiosInstance.get(`/posts/${id}/comments/count`);
+    return res.data;
   }
 
 }

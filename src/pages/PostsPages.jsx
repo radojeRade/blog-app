@@ -3,17 +3,28 @@ import PostsComponent from '../components/PostsComponent';
 import PostsService from "../service/PostsService";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useCallback } from "react";
+
 
 
 export default function PostsPages(){
     const [posts, setPosts] = useState();
+    const [count, setCount] = useState();
 
     const getAllPosts = async () => {
         const posts = await PostsService.getAll('/posts');
         setPosts(posts);
+        const arr = await Promise.all(posts.map(async(el) => {  //Promise.all vraca niz promisa koji se razresavaju
+            try{
+                let num = await PostsService.getCount(el.id);
+                el.count = num.count;
+                return el;
+            }catch(err) {
+                throw err;
+            }
+        }))
+        setPosts(arr);
     };
-
+    
     const remove = async(postId) => {
         const res = await PostsService.delete(postId);
          if (res === 200) {
@@ -39,6 +50,7 @@ export default function PostsPages(){
                                         id = {post.id}
                                         text={post.text}
                                         title={post.title}
+                                        count={post.count}
                                         remove={remove} />
                         )}
                 </li>

@@ -35,7 +35,6 @@ export default function AddPost(){
 
     const handleOnSubmit = async (e) => {
         e.preventDefault();
-        console.log(post);
         const res = await PostsService.add(post);
         if(res === 200){
             history.push('/posts');
