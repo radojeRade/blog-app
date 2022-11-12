@@ -22,6 +22,11 @@ class PostsService {
     return res;
   }
 
+  async delete(id){
+    const res = await axiosInstance.delete(`/posts/${id}`);
+    return res.status;
+  }
+
 }
 
 export default new PostsService();
