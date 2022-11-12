@@ -11,11 +11,12 @@ export default function PostsPages(){
     const getAllPosts = async () => {
         const posts = await PostsService.getAll('/posts');
         setPosts(posts);
+        console.log('usao');
       };
 
     useEffect(() => {
-    getAllPosts();
-    }, [posts]);
+        getAllPosts();
+    }, []);
 
     return(
         <div>
