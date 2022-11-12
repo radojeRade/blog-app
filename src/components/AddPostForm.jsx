@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function AddPostForm({post, setPost, onSubmit, reset}){
+export default function AddPostForm({post, setPost, onSubmit, onSubmitEdit, reset}){
 
     return(
         <div>
-            <form onSubmit={onSubmit}>
+            <form >
             <label>Title:</label>
             <input 
               required
@@ -23,7 +23,10 @@ export default function AddPostForm({post, setPost, onSubmit, reset}){
               onChange={({target}) => 
                 setPost({...post, text: target.value, createdAt: new Date()})} //ubacio datum ovde
             />
-            <button type="submit">Submit</button>
+            <button onClick={onSubmit}>Submit</button>
+            <>
+            <button onClick={onSubmitEdit}>Edit</button>
+            </>
             </form>
             <button onClick={() => {reset()}}>Reset</button>
         </div>

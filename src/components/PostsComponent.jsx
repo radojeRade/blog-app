@@ -8,6 +8,7 @@ export default function PostsComponent({id, title, text, }){
             <h4>{title} and id is: {id}</h4>
             <p>{text}</p>
             <Link to = {`/view/${id}`}><button>View</button></Link>
+            <Link to = {`/edit/${id}`}><button>Edit</button></Link>
         </div>
     )
 }

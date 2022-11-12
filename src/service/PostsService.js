@@ -17,6 +17,11 @@ class PostsService {
     return res.status;
   }
 
+  async edit(id, body){
+    const res = await axiosInstance.put(`/posts/${id}`, body);
+    return res;
+  }
+
 }
 
 export default new PostsService();
