@@ -12,6 +12,11 @@ class PostsService {
         return data.data;
   }
 
+  async add(body){
+    const res = await axiosInstance.post("/posts", body);
+    return res.status;
+  }
+
 }
 
 export default new PostsService();
