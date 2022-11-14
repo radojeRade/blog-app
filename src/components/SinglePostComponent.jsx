@@ -7,6 +7,7 @@ export default function SinglePostComponent({
   formatedDate,
   removeComment,
   editComment,
+  evFun
 }) {
   return (
     <div>
@@ -18,7 +19,8 @@ export default function SinglePostComponent({
       <ul>
         {comments &&
           comments.map((comment) => (
-            <li key={comment.id}>
+            
+            <li key={comment.id} onClick = {()=>evFun(comment.id)}>
               {comment.text}
               <button onClick={() => removeComment(comment.id)}>
                 Remove comment

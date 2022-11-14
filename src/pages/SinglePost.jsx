@@ -33,6 +33,12 @@ export default function SinglePost() {
       setPost(response);
     }
   };
+  const evFun = async (funId) => {
+    const res = await PostsService.editComment(funId);
+    if (res.status === 200) {
+      alert(JSON.stringify(res.data));
+    }
+  }
   const addComment = async (e) => {
     e.preventDefault();
     if (commentEditId !== 0) {
@@ -40,12 +46,12 @@ export default function SinglePost() {
       if (res.status === 200) {
         let arr = post.comments.map((el) => {
           if (el.id === commentEditId) {
-            el = { ...res.data };
-            return el;
+            return { ...res.data };
           }
+          return el;
         });
         setPost({ ...post, comments: [...arr] });
-        history.push("/posts");
+        //history.push("/posts");
       }
     } else {
       let id = Number(postId.id);
@@ -72,7 +78,7 @@ export default function SinglePost() {
   };
 
   useEffect(() => {
-    if (postId.id) {
+    if(postId.id){ 
       getSinglePost();
     }
   }, [postId]);
@@ -85,6 +91,7 @@ export default function SinglePost() {
         formatedDate={formatedDate}
         removeComment={removeComment}
         editComment={editComment}
+        evFun = {evFun}
       />
       <AddCommentForm
         comment={comment}
