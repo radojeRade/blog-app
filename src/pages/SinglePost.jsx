@@ -20,6 +20,8 @@ export default function SinglePost() {
     createdAt: "",
     postId: 0,
   });
+  //const [commentId, setCommentId] = useState(0);
+
   const history = useHistory();
   const formatedDate = useFormatedDate(post.createdAt);
 
@@ -40,6 +42,12 @@ export default function SinglePost() {
       history.push("/posts");
     }
   };
+  const removeComment = async (commentId) => {
+    const res = await PostsService.removeComment(commentId);
+    if (res.status === 200) {
+      getSinglePost();
+    }
+  };
 
   useEffect(() => {
     if (postId.id) {
@@ -53,6 +61,7 @@ export default function SinglePost() {
         post={post}
         comments={post.comments}
         formatedDate={formatedDate}
+        removeComment={removeComment}
       />
       <AddCommentForm
         comment={comment}

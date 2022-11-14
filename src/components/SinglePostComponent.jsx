@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function SinglePostComponent({ post, comments, formatedDate }) {
+export default function SinglePostComponent({
+  id,
+  post,
+  comments,
+  formatedDate,
+  removeComment,
+}) {
   return (
     <div>
       <h3>Title is: {post.title}</h3>
@@ -9,10 +15,15 @@ export default function SinglePostComponent({ post, comments, formatedDate }) {
       <p>{formatedDate ? formatedDate : post.createdAt}</p>
       <h5>Comments:</h5>
       <ul>
-        <li>
-          {comments &&
-            comments.map((comment) => <p key={comment.id}>{comment.text}</p>)}
-        </li>
+        {comments &&
+          comments.map((comment) => (
+            <li key={comment.id}>
+              {comment.text}
+              <button onClick={() => removeComment(comment.id)}>
+                Remove comment
+              </button>
+            </li>
+          ))}
       </ul>
     </div>
   );
