@@ -40,6 +40,14 @@ class PostsService {
     const res = await axiosInstance.delete(`/comments/${id}`);
     return res;
   }
+  async editComment(id) {
+    const res = await axiosInstance.get(`/comments/${id}`);
+    return res;
+  }
+  async putComment(id, comment) {
+    const res = await axiosInstance.put(`/comments/${id}`, comment);
+    return res;
+  }
 }
 
 export default new PostsService();

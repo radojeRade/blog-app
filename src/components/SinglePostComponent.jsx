@@ -6,6 +6,7 @@ export default function SinglePostComponent({
   comments,
   formatedDate,
   removeComment,
+  editComment,
 }) {
   return (
     <div>
@@ -21,6 +22,9 @@ export default function SinglePostComponent({
               {comment.text}
               <button onClick={() => removeComment(comment.id)}>
                 Remove comment
+              </button>
+              <button onClick={() => editComment(comment.id)}>
+                Edit comment
               </button>
             </li>
           ))}

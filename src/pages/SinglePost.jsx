@@ -20,7 +20,7 @@ export default function SinglePost() {
     createdAt: "",
     postId: 0,
   });
-  //const [commentId, setCommentId] = useState(0);
+  const [commentEditId, setCommentEditId] = useState(0);
 
   const history = useHistory();
   const formatedDate = useFormatedDate(post.createdAt);
@@ -35,17 +35,39 @@ export default function SinglePost() {
   };
   const addComment = async (e) => {
     e.preventDefault();
-    let id = Number(postId.id);
-    console.log(comment);
-    const res = await PostsService.addComment(id, comment);
-    if (res.status === 200) {
-      history.push("/posts");
+    if (commentEditId !== 0) {
+      const res = await PostsService.putComment(commentEditId, comment);
+      if (res.status === 200) {
+        let arr = post.comments.map((el) => {
+          if (el.id === commentEditId) {
+            el = { ...res.data };
+            return el;
+          }
+        });
+        setPost({ ...post, comments: [...arr] });
+        history.push("/posts");
+      }
+    } else {
+      let id = Number(postId.id);
+      console.log(comment);
+      const res = await PostsService.addComment(id, comment);
+      if (res.status === 200) {
+        history.push("/posts");
+      }
     }
   };
   const removeComment = async (commentId) => {
     const res = await PostsService.removeComment(commentId);
     if (res.status === 200) {
-      getSinglePost();
+      let arr = post.comments.filter((el) => el.id !== commentId);
+      setPost({ ...post, comments: [...arr] });
+    }
+  };
+  const editComment = async (commentId) => {
+    const res = await PostsService.editComment(commentId);
+    if (res.status === 200) {
+      setComment(res.data);
+      setCommentEditId(commentId);
     }
   };
 
@@ -62,6 +84,7 @@ export default function SinglePost() {
         comments={post.comments}
         formatedDate={formatedDate}
         removeComment={removeComment}
+        editComment={editComment}
       />
       <AddCommentForm
         comment={comment}
